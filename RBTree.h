@@ -254,6 +254,56 @@ public:
 		m_head->m_right = rightMost();
 		return true;
 	}
+
+	RBTreeNode<T> * increasement(RBTreeNode<T> * cur)//++
+	//++操作，寻找当前节点的后一个节点。
+	//后一个节点：将所有节点排序后，找到当前节点，后一个节点就是顺序下的后一个节点
+	{
+		RBTreeNode<T> * tmp = cur;
+		if (cur->m_right)
+		{
+			tmp = cur->m_right;
+			for (; tmp->m_left; tmp = tmp->m_left);
+		}
+		else
+		{
+			tmp = tmp->m_parent;
+			for (; cur != tmp->m_left && tmp != m_head; tmp = tmp->m_parent)
+			{
+				cur = tmp;
+			}
+			if (tmp == m_head)
+			{
+				return nullptr;
+			}
+		}
+		return tmp;
+	}
+
+	RBTreeNode<T> *  decreasement(RBTreeNode<T> * cur)//--
+	//与++操作类似
+	{
+		RBTreeNode<T> * tmp = cur;
+		if (cur->m_left)
+		{
+			tmp = cur->m_left;
+			for (; tmp->m_right; tmp = tmp->m_right);
+		}
+		else
+		{
+			tmp = tmp->m_parent;
+			for (; cur != tmp->m_right && tmp != m_head; tmp = tmp->m_parent)
+			{
+				cur = tmp;
+			}
+			if (tmp == m_head)
+			{
+				return nullptr;
+			}
+		}
+		return tmp;
+	}
+
 	void me_printf()//打印
 	{
 		RBTreeNode<T> * cur = m_head->m_right;
