@@ -30,4 +30,118 @@ const变量支持在不同文件中的“重定义”，实际上在各个文件
 “常量引用”意为：引用的对象为常量，即对const的引用。
 在C++中引用被规定，一经初始化，便无法修改所绑定的对象；从这层意思理解，每个引用都为常量，但引用的对象是否是常量由用户自己定义，这并不影响引用本身的性质。
 非常量的引用初始值必须为左值。
+## 从关键字来总结
+- 顶层const：变量本身的const属性；底层const：变量所指对象的const属性。
+1. alignas
+2. alignof
+3. asm
+4. auto
+auto 一般会忽略顶层const保留底层const.
+eg:
+```
+	int a = 10;
+	const int b = 11;
+	const int* p1 = &b;
+	int* const p2 = &a;
+	const int* const p3 = &b;
+	auto pp1 = p1;//pp1 -- const int *
+	auto pp2 = p2;//pp2 -- int *
+	auto pp3 = p3;//pp3 -- const int *
+```
+5. bool
+6. break
+7. case
+8. catch
+9. char
+10. char16_t
+11. char32_t
+12. class
+13. const关键词的使用
+- 修饰常量,修饰后该常量的值不会被改变,无论何时(被const_cast脱掉const属性后可以做左值,修改后,值仍然，若加阻止进入寄存器关键字后值也会变化)
+常量指针&常量引用const 在*前面 该指针所指向的变量为常量，及对该指针取解引用无法做左值
+指针常量&引用常量const 在*后面 该指针为常量，对该指针取解引用可以做左值，但其本身不可更改
+常量指针常量&常量引用常量 * 两侧都有const
+星号（*），如果const出现在线的左边，指针指向的数据为常量；如果const出现在右边，指针本身为常量。而引用本身与天俱来就是常量，即不可以改变指向。
+14. constexpr
+
+用来验证一个变量是否是常量表达式；改变量只能用常量表达式初始化
+在对指针声明时，只针对指针本身（相当于顶层const）
+常量表达式：值不会改变，并且在编译过程中就得到计算结果的表达式
+字面值类型：算术类型，引用，指针；这些都是常量表达式
+15. const_cast
+16. continue
+17. decltype
+类型指示符：从表达式的类型推断出要定义的变量的类型，但不用该表达式的值去初始化变量
+```
+int i = 42,*p = &i,&r = i;
+decltype(r+0) b;//b为未初始化的int型变量
+decltype(*p) c;//c为int&型 -- 必须初始化
+decltype(r) d;//d为int&型 -- 必须初始化
+decltype(i) e;//e为未初始化的int型变量
+decltype((i)) f; //d为int&型 -- 必须初始化
+```
+对于双层括号而言结果永远是引用，单层括号，只有当括号内为引用时或指针解引用时是引用。
+传入函数时，不需调用该函数
+18. default
+19. delete
+20. do
+21. double
+22. dynamic_cast
+23. else
+24. enum
+25. explicit
+26. export
+27. extern
+28. false
+29. float
+30. for
+31. friend
+32. goto
+33. if
+34. inline
+35. int 
+36. long
+37. mutable
+38. namespace
+39. new
+40. noexcept
+41. nullptr
+42. operator
+43. private
+44. protected
+45. public
+46. register
+47. reginterpret_cast
+48. return
+49. short
+50. signed
+51. sizeof
+52. static
+53. static_assert
+54. static_cast 
+55. struct
+56. switch
+57. template
+58. this
+59. thread_local
+60. throw
+61. true
+62. try
+63. typedef
+类型别名
+`typedef name1 name2`
+name2 为name1的别名
+64. typeid
+66. typename
+67. union
+68. unsigned
+69. using
+类型别名
+`using name2 = name1`
+name2 为name1的别名
+70. virtual
+71. void
+72. volatile
+73. wchar_t
+74. while
 
