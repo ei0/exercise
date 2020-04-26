@@ -51,6 +51,17 @@ eg:
 ```
 5. bool
 C++新增类型，只有两个取值，且0为假，1为真
+BOOL和bool的区别
+一、
+1、类型不同
+BOOL为int型
+bool为布尔型
+2、长度不同
+bool只有一个字节
+BOOL长度视实际环境来定，一般可认为是4个字节
+3、取值不同
+bool取值false和true，是0和1的区别
+BOOL取值FALSE和TRUE，是0和非0的区别
 6. break
 跳出本循环
 7. case
@@ -113,14 +124,21 @@ decltype((i)) f; //d为int&型 -- 必须初始化
 在类的构造中使用，防止隐式转换
 当类的声明和定义分别在两个文件中时，explicit只能写在在声明中，不能写在定义中。
 26. export
+但是对模板类型，则必须在定义这些模板类对象和模板函数时，使用标准C++新增加的关键字export（导出/出口/输出）。
+C++11后不再支持
 27. extern
+声明
+为了访问其他编译单元（如另一代码文件）中的变量或对象，对普通类型（包括基本数据类、结构和类），可以利用关键字extern，来使用这些变量或对象时
 28. false
+FALSE/TRUE是int类型，而false/true是bool类型
 29. float
+单精度浮点数，4字节，基本数据类型
 30. for
 31. friend
 32. goto
 33. if
 34. inline
+内联函数关键词，将函数设为inline后，函数会在调用处展开，而非进入函数栈
 35. int 
 36. long
 37. mutable
@@ -154,6 +172,7 @@ decltype((i)) f; //d为int&型 -- 必须初始化
 59. thread_local
 60. throw
 61. true
+FALSE/TRUE是int类型，而false/true是bool类型
 62. try
 63. typedef
 类型别名
