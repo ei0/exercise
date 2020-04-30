@@ -86,6 +86,10 @@ BOOL取值FALSE和TRUE，是0和非0的区别
 在对指针声明时，只针对指针本身（相当于顶层const）
 常量表达式：值不会改变，并且在编译过程中就得到计算结果的表达式
 字面值类型：算术类型，引用，指针；这些都是常量表达式
+
+用来修饰函数是，若传入的参数可以在编译期间计算处理，那么这个函数就会产生编译时期的值。若不能产生则和普通函数一样。
+检测constexpr函数是否产生编译时期的发法，array需要编译器常值才能通过编译。
+提高效率
 15. const_cast
 const常量的底层处理：当const常量被初始化后，const常量的值不会发生变化，哪怕该常量的地址上的值被改变，依然无效，const常量的值仍为初始化的值。
 给const常量前加上volatile关键字，禁用编译器优化，每次重新去内存里读取，使得地址空间上的值改变。
@@ -168,9 +172,29 @@ expression：一个待遍历序列，该序列必须支持++，返回迭代器�
 被mutable修饰的变量，将永远处于可变的状态，即使在一个const函数中。
 若数据被mutable修饰，那么它就可以突破const的限制，在被const修饰的函数里面也能被修改。
 38. namespace
+命名空间，是对全局作用域的细分`namespace name{…… ……}`使用时用双冒号访问该域`name::a`
 39. new
+
+c中
+`void* malloc(size_t size)//申请size个字节的空间`
+`void* calloc(size_t size,size_t size)//将p的值拷贝到新空间去`
+`void *realloc(void*p,size_t size)//释放p，返回刚申请的新空间`
+通过动态内存分配实例化对象时，new/delete会自动调用构造/析构函数，而malloc。realloc不会调用 
+```
+	Date *pd = (Date*)malloc(sizeof(Date));//分配空间
+	Date *pd = (Date*)operator new(sizeof(Date));//分配空间，抛异常
+	Date *pd = new Date(2000, 01, 01);//分配空间，调用构造函数
+    eg:Date *pd = new Date[3]{Date(1999,01,01),Date(1998,01,01),Date(1997,01,01)}//数组的空间分配，抛异常与调用构造函数(无参),c++11后支持有参的调用
+	delete[] pd;
+```
+定位new
+`eg:Date *pd = new (buffer) Date[2];//buffer为已申请的内存池`
+通过定位new申请的空间，实际上它并没有新申请空间，不需要进行delete进行释放，若有需要进行析构，使用显示析构的方法调用。
 40. noexcept
+用来声明一个函数时，若`void fun() noexcept(ture)`表示该函数不会抛出异常，若`void fun() noexcept(false)`则有可能抛出false的异常
+析构函数默认被声明为noexcept，因为析构函数不应该抛出任何异常
 41. nullptr
+空指针，0更像整型，NULL底部也是0，故而在使用0和空指针时容易造成数据二义，C++11引入nullptr
 42. operator
 43. private
 44. protected
